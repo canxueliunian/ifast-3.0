@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head th:include="include :: header">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content ">
+	<div class="col-sm-12">
+		<div class="ibox">
+			<div class="ibox-body">
+				<div class="fixed-table-toolbar">
+					<div class="columns pull-left nopadding form-inline">
+						<span>酒店名称:</span>
+						<input id="hotelname" type="text" class="form-control"
+							   placeholder="酒店名称">
+					</div>
+					<div class="columns pull-left nopadding form-inline">
+						店主姓名:
+						<input id="managename" type="text" class="form-control"
+							   placeholder="店主姓名">
+					</div>
+					<div class="columns pull-left nopadding form-inline">
+						店主联系方式:
+						<input id="managerphone" type="text" class="form-control"
+							   placeholder="店主联系方式">
+					</div>
+					<div class="columns pull-left nopadding form-inline">
+						酒店类型:
+						<select class="form-control" id="hoteltype">
+							<option value="1">经济型酒店</option>
+							<option value="2"></option>
+						</select>
+					</div>
+					<div class="columns pull-left nopadding form-inline">
+						开业年月:
+						<input type="text" class="laydate-icon layer-date form-control" id="openingdate" placeholder="开业年月"
+							   onclick="laydate({istime: true, format: 'YYYY年MM月	'})" style="background-color: #fff;"/>
+					</div>
+					<div class="columns pull-left nopadding form-inline">
+						市场人员:
+						<input id="marketmanname" type="text" class="form-control"
+							   placeholder="市场人员">
+					</div>
+
+					<div class="columns pull-left nopadding form-inline" data-toggle="distpicker" id="dist">
+						酒店地址:
+							<select class="form-control" id="provincename">
+							</select>
+							<select class="form-control" id="cityname">
+							</select>
+
+					</div>
+
+					<div class="columns pull-left nopadding form-inline">
+						登记时间:
+						<input type="text" class="laydate-icon layer-date form-control" id="starttime" placeholder=""
+							   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;"/>至
+						<input type="text" class="laydate-icon layer-date form-control" id="endtime" placeholder=""
+							   onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" style="background-color: #fff;"/>
+					</div>
+					<div class="columns pull-left">
+						<button class="btn btn-success" onclick="reLoad()">查询</button>
+					</div>
+					<!--<div class="columns pull-left">-->
+						<!--<button class="btn btn-success" onclick="reset()">重置</button>-->
+					<!--</div>-->
+				</div>
+				<table id="exampleTable" data-mobile-responsive="true">
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<!--shiro控制bootstraptable行内按钮看见性 -->
+<div>
+	<script type="text/javascript">
+        var s_edit_h = 'hidden';
+        var s_remove_h = 'hidden';
+        var s_resetPwd_h = 'hidden';
+	</script>
+</div>
+<div shiro:hasPermission="quotation:hotel:edit">
+	<script type="text/javascript">
+        s_edit_h = '';
+	</script>
+</div>
+<div shiro:hasPermission="quotation:hotel:remove">
+	<script type="text/javascript">
+        var s_remove_h = '';
+	</script>
+</div>
+<div shiro:hasPermission="quotation:hotel:resetPwd">
+	<script type="text/javascript">
+        var s_resetPwd_h = '';
+	</script>
+</div>
+</div>
+<div th:include="include :: footer"></div>
+<script type="text/javascript" src="/js/appjs/quotation/hotel/hotel.js"></script>
+<script type="text/javascript">
+    function reset() {
+        $('#hotelname').empty();
+        $('#managename').empty();
+        $('#managerphone').empty();
+        $('#hoteltype').empty();
+        $('#openingdate').empty();
+        $('#marketmanname').empty();
+        $('#provincename').empty();
+        $('#cityname').empty();
+        $('#starttime').empty();
+        $('#endtime').empty();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ifast.quotation.dao.EntryDao">
+
+
+    <insert id="insertLink" >
+        insert into db_re_item_entry(itemId,entryId)
+        values( #{itemId},#{entryId})
+    </insert>
+    <select id="selectItemIdByEntryId" resultType="java.lang.Long">
+           select itemId from db_re_item_entry
+        where entryId =#{entryId}
+
+    </select>
+
+
+</mapper>

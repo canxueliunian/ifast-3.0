@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ifast.quotation.dao.HomePriceDao">
+
+    <insert id="insertEntryLink">
+        insert into db_re_home_entry(homeId,itemId,entryId) values(
+        #{hotelId},#{itemId},#{entryId})
+
+    </insert>
+    <insert id="insertItemLink" >
+        insert into db_re_home_item(homeId, itemId) values (
+        #{hotelId},#{itemId}
+        )
+
+    </insert>
+    <insert id="insertItemEntryLink">
+        insert into db_re_home_item_entry(itemId,entryId) values (
+        #{itemId},#{entryId}
+        )
+    </insert>
+    <select id="getItemIdsByHomeId" resultType="java.lang.Long">
+        select itemId from db_re_home_item where homeId =#{homeId}
+
+    </select>
+    <select id="selectEntryIdsByHomeId" resultType="java.lang.Long">
+        select  entryId from db_re_home_entry where homeId =#{homePriceId}
+
+
+    </select>
+</mapper>
