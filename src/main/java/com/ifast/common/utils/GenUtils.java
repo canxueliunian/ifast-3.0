@@ -54,7 +54,7 @@ public class GenUtils {
      */
 
     public static void generatorCode(Map<String, String> table, List<Map<String, String>> columns,
-            ZipOutputStream zip) {
+                                     ZipOutputStream zip) {
         // 配置信息
         Map<String, String> config = getConfig();
         // 表信息
@@ -71,13 +71,13 @@ public class GenUtils {
         Set<String> dataTypes = new HashSet<>(), columnNames = new HashSet<>();
         List<String> baseColumnNames = Arrays.asList("deleted", "version", "createAt", "createBy", "updateAt", "updateBy");
         for (Map<String, String> column : columns) {
-        	columnNames.add(column.get("columnName"));
-        	if(baseColumnNames.contains(column.get("columnName"))) continue;
+            columnNames.add(column.get("columnName"));
+            if (baseColumnNames.contains(column.get("columnName"))) continue;
 
             ColumnDO columnDO = new ColumnDO();
             columnDO.setColumnName(column.get("columnName"));
             columnDO.setDataType(column.get("dataType"));
-            columnDO.setComments(column.get("columnComment"));
+            columnDO.setAllComments(column.get("columnComment"));
             columnDO.setExtra(column.get("extra"));
 
             // 列名转换成Java属性名
@@ -163,7 +163,7 @@ public class GenUtils {
      * 列名转换成Java属性名
      */
     public static String columnToJava(String columnName) {
-        return WordUtils.capitalizeFully(columnName, new char[] { '_' }).replace("_", "");
+        return WordUtils.capitalizeFully(columnName, new char[]{'_'}).replace("_", "");
     }
 
     /**

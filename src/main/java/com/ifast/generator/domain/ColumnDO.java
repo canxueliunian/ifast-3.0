@@ -1,5 +1,10 @@
 package com.ifast.generator.domain;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * <pre>
  * 列的属性
@@ -11,8 +16,7 @@ public class ColumnDO {
     private String columnName;
     // 列名类型
     private String dataType;
-    // 列名备注
-    private String comments;
+
 
     // 属性名称(第一个字母大写)，如：user_name => UserName
     private String attrName;
@@ -22,6 +26,14 @@ public class ColumnDO {
     private String attrType;
     // auto_increment
     private String extra;
+    // 列名备注,用在html等页面显示上
+    private String comments;
+    // 字典字段
+    private String wBookComments;
+    // 全部备注内容-- 用在bean 上
+    private String allComments;
+    // 字典字段备注
+    private Map<String, String> wBookMap;
 
     public String getColumnName() {
         return columnName;
@@ -85,4 +97,43 @@ public class ColumnDO {
                 + comments + '\'' + ", attrName='" + attrName + '\'' + ", attrname='" + attrname + '\'' + ", attrType='"
                 + attrType + '\'' + ", extra='" + extra + '\'' + '}';
     }
+
+
+    public void setAllComments(String allComments) {
+        this.allComments = allComments;
+        if (StringUtils.isEmpty(allComments)) {
+            return;
+        }
+        if (!allComments.contains(";")) {
+            this.comments = allComments;
+            return;
+        }
+        try {
+            // 进行复杂处理
+            String[] commentList = allComments.split(";");
+
+            this.wBookMap = new HashMap<>();
+            for (String comment : commentList) {
+                if (comment.contains("*")) {
+                    continue;
+                } else if (comment.contains("<")) {
+                    String s1 = comment.substring(1);
+                    String wBookComments = s1.substring(0, s1.length() - 1);
+                    String[] wBookList = wBookComments.split(",");
+                    this.wBookComments = wBookComments;
+                    for (String entry : wBookList) {
+                        String[] split2 = entry.split("=");
+                        this.wBookMap.put(split2[0], split2[1]);
+                    }
+                } else {
+                    // html 使用的 comment
+                    this.comments = comment;
+                }
+
+            }
+        } catch (Exception e) {
+            this.comments = allComments;
+        }
+    }
+
 }
